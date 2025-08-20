@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sydematic Developer - Aurora Borealis Theme */
+
+@layer base {
+  :root {
+    /* Aurora Background Colors */
+    --background: 240 15% 5%;
+    --foreground: 120 25% 95%;
+    
+    /* Card & Surface Elements */
+    --card: 240 20% 8%;
+    --card-foreground: 120 25% 95%;
+    
+    /* Popover Elements */
+    --popover: 240 15% 5%;
+    --popover-foreground: 120 25% 95%;
+    
+    /* Aurora Green - Primary */
+    --primary: 135 75% 65%;
+    --primary-foreground: 240 15% 5%;
+    --primary-glow: 135 85% 75%;
+    
+    /* Aurora Blue - Secondary */
+    --secondary: 215 85% 60%;
+    --secondary-foreground: 240 15% 5%;
+    
+    /* Muted Elements */
+    --muted: 240 10% 12%;
+    --muted-foreground: 120 15% 70%;
+    
+    /* Aurora Purple - Accent */
+    --accent: 285 75% 65%;
+    --accent-foreground: 240 15% 5%;
+    --accent-glow: 285 85% 75%;
+    
+    /* Aurora Pink */
+    --aurora-pink: 320 80% 70%;
+    --aurora-pink-foreground: 240 15% 5%;
+    
+    /* Aurora Cyan */
+    --aurora-cyan: 185 85% 65%;
+    --aurora-cyan-foreground: 240 15% 5%;
+    
+    /* Math/Quantum Gold */
+    --quantum: 50 90% 70%;
+    --quantum-foreground: 240 15% 5%;
+    
+    /* Destructive */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 120 25% 95%;
+    
+    /* Borders & Inputs */
+    --border: 240 20% 15%;
+    --input: 240 10% 12%;
+    --ring: 135 75% 65%;
+    
+    /* Radius */
+    --radius: 1rem;
+    
+    /* Aurora Variables */
+    --aurora-shadow: 0 25px 50px -12px hsl(240 15% 5% / 0.9);
+    --aurora-glow: 0 0 60px hsl(135 75% 65% / 0.4);
+    --star-field: radial-gradient(2px 2px at 20px 30px, #fff, transparent), 
+                   radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                   radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                   radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                   radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+    
+    /* Aurora Gradients */
+    --gradient-aurora: linear-gradient(45deg, 
+      hsl(135 75% 65% / 0.8) 0%, 
+      hsl(215 85% 60% / 0.6) 25%, 
+      hsl(285 75% 65% / 0.7) 50%, 
+      hsl(320 80% 70% / 0.5) 75%, 
+      hsl(185 85% 65% / 0.6) 100%);
+    --gradient-hero: linear-gradient(180deg, 
+      hsl(240 15% 5% / 0.9), 
+      hsl(240 20% 8% / 0.95));
+    --gradient-card: linear-gradient(145deg, 
+      hsl(240 20% 8% / 0.8), 
+      hsl(240 15% 12% / 0.9));
+    --gradient-accent: linear-gradient(135deg, 
+      hsl(285 75% 65%), 
+      hsl(320 80% 70%));
+    --gradient-primary: linear-gradient(135deg, 
+      hsl(135 75% 65%), 
+      hsl(185 85% 65%));
+    --gradient-quantum: linear-gradient(135deg, 
+      hsl(50 90% 70%), 
+      hsl(45 85% 65%));
+    
+    /* Animations */
+    --transition-ethereal: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground cursor-none;
+    background: var(--star-field), 
+                linear-gradient(180deg, hsl(240 15% 5%), hsl(240 20% 8%));
+    background-size: 200px 100px, 100% 100%;
+    background-attachment: fixed;
+    position: relative;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-aurora);
+    opacity: 0.3;
+    z-index: -1;
+    animation: aurora-dance 15s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  /* Hide default cursor globally */
+  * {
+    cursor: none !important;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/30;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/50 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/70;
+  }
+}

@@ -45,6 +45,7 @@ const CustomCursor = () => {
 
     const handleMouseOver = (e) => {
       const target = e.target;
+
       if (target.closest(".cursor-music")) setCursorType("music");
       else if (target.closest(".cursor-film")) setCursorType("film");
       else if (target.closest(".cursor-quantum")) setCursorType("quantum");
@@ -103,7 +104,7 @@ const CustomCursor = () => {
       {/* Main Cursor */}
       <div
         ref={mainCursor}
-        className={`fixed pointer-events-none z-50 mix-blend-screen transition-all duration-300 ${
+        className={`fixed pointer-events-none z-[9999] mix-blend-screen transition-all duration-300 ${
           isHovering ? "scale-150" : "scale-100"
         }`}
         style={{ width: "24px", height: "24px" }}
@@ -122,7 +123,7 @@ const CustomCursor = () => {
           <div
             key={i}
             ref={(el) => (trailRefs.current[i] = el)}
-            className="fixed pointer-events-none z-40 w-3 h-3 rounded-full bg-gradient-aurora opacity-30 mix-blend-screen"
+            className="fixed pointer-events-none z-[9998] w-3 h-3 rounded-full bg-gradient-aurora opacity-30 mix-blend-screen"
             style={{ transform: "translate3d(0,0,0) translate(-50%, -50%)" }}
           />
         ))}

@@ -28,6 +28,9 @@ const Index = () => {
               <a href="#projects" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
                 Projects
               </a>
+               <a href="#big3" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
+                The Big 3
+              </a>
             </div>
           </div>
         </div>
@@ -43,7 +46,7 @@ const Index = () => {
       </main>
 
       {/* Interactive Footer - The Big 3 M's */}
-      <footer className="py-16 px-6 border-t border-primary/20 bg-gradient-card relative">
+      <footer id="big3" className="py-16 px-6 border-t border-primary/20 bg-gradient-card relative">
         {/* Background Aurora */}
         <div className="absolute inset-0 bg-gradient-aurora opacity-5 animate-aurora-dance" />
         

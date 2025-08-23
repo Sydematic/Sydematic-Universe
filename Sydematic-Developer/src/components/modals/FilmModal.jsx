@@ -9,7 +9,8 @@ const filmScenes = [
     year: 1999,
     scene: "Neo seeing the code for the first time",
     significance: "Reality is just patterns of information",
-    codeConnection: "Every bug is a glitch in the matrix - debug to see the truth"
+    codeConnection: "Every bug is a glitch in the matrix - debug to see the truth",
+    learnMore:"https://www.youtube.com/watch?v=O5b0ZxUWNf0"
   },
   {
     title: "Inception", 
@@ -17,7 +18,8 @@ const filmScenes = [
     year: 2010,
     scene: "Limbo - the deepest level of dreams",
     significance: "Architecture of nested realities",
-    codeConnection: "Recursive functions and nested data structures mirror dream layers"
+    codeConnection: "Recursive functions and nested data structures mirror dream layers",
+    learnMore:"https://www.youtube.com/watch?v=a5R3_ToFRGg"
   },
   {
     title: "Interstellar",
@@ -25,7 +27,9 @@ const filmScenes = [
     year: 2014,
     scene: "Cooper in the tesseract",
     significance: "Time as a navigable dimension",
-    codeConnection: "Asynchronous programming - manipulating time and sequence"
+    codeConnection: "Asynchronous programming - manipulating time and sequence",
+    learnMore: "https://www.youtube.com/watch?v=TMxJnoPOFkg"
+ 
   },
   {
     title: "Avatar: The Last Airbender",
@@ -33,7 +37,8 @@ const filmScenes = [
     year: 2005,
     scene: "Aang entering the Avatar State",
     significance: "Connection to all past knowledge and power",
-    codeConnection: "Inheritance and accessing the full stack of accumulated wisdom"
+    codeConnection: "Inheritance and accessing the full stack of accumulated wisdom",
+    learnMore: "https://www.youtube.com/watch?v=mZhtza3sCmg"
   }
 ];
 
@@ -72,8 +77,12 @@ export const FilmModal = () => {
                   <h4 className="font-bold text-lg text-foreground">{scene.title}</h4>
                   <p className="text-sm text-muted-foreground">{scene.movie} ({scene.year})</p>
                 </div>
-                <Button variant="ghost" size="sm" className="hover:bg-accent/20">
-                  <ExternalLink className="w-4 h-4" />
+                <Button variant="ghost" 
+                size="sm" 
+                className="hover:bg-accent/20"
+                 onClick={() => window.open(scene.learnMore, "_blank")}
+                >
+                <ExternalLink className="w-4 h-4" />
                 </Button>
               </div>
               

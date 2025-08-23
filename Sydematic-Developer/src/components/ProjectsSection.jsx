@@ -8,27 +8,27 @@ const ProjectsSection = () => {
 
   const projects = [
     {
-      title: "Elemental Dashboard",
+      title: "DVD Menu Navigation",
       description:
-        "A data visualization platform inspired by Avatar's four elements, featuring interactive charts that flow like water and burn like fire.",
-      tech: ["React", "D3.js", "TypeScript", "Tailwind"],
+        "Created an interactive multimedia layout that mimics classic DVD menus, linking movie scenes and media previews. Gives an option to randomize a room to go into by choice with the help of a customized remote control cursor.",
+      tech: ["UI/UX","API", "JavaScript", "Vanilla CSS"],
       category: "Web App",
       gradient: "bg-gradient-primary",
     },
     {
-      title: "Inception Timer",
+      title: "Killer Instinct API DB Project",
       description:
-        "A productivity app with nested timers that dive deeper into focus states, just like the movie's layered dream sequences.",
-      tech: ["Next.js", "Prisma", "tRPC", "Framer Motion"],
+        "Built a custom API to deliver character data from the Killer Instinct game and integrated it with a dynamic front-end interface. Designed a search engine that filters results, empasizing accessibility.",
+      tech: ["Javascript", "Custom API", "Vanilla CSS", "UI/UX"],
       category: "Productivity",
       gradient: "bg-gradient-accent",
     },
     {
-      title: "Cinematic Portfolio",
+      title: "Hobby-Hub",
       description:
-        "This very portfolio — a love letter to film and code, featuring custom animations and interactive storytelling.",
-      tech: ["React", "Tailwind", "Three.js", "TypeScript"],
-      category: "Portfolio",
+         "A full-stack hobby and recipe app showcasing workouts, recipes, and meal information, built with React, Tailwind, and Node.js. Features interactive UI, API integrations, and personalized content for users.",
+      tech: ["UI/UX", "React", "Tailwind", "Javascript"],
+      category: "Full-Stack App",
       gradient: "bg-gradient-card",
     },
   ];
@@ -94,7 +94,7 @@ const ProjectsSection = () => {
           ))}
         </div>
 
-  {/* Modals */}
+{/* Modals */}
 {projects.map(
   (project) =>
     openModal === project.title && (
@@ -143,6 +143,7 @@ const ProjectsSection = () => {
       </div>
     )
 )}
+
 
 
       </div>

@@ -9,7 +9,7 @@ const quantumConcepts = [
     explanation: "Schrödinger's cat is both alive and dead until we open the box",
     codeParallel: "Variables can hold multiple potential values in async operations until resolved",
     formula: "ψ = α|0⟩ + β|1⟩",
-    learnMore: "https://en.wikipedia.org/wiki/Quantum_superposition"
+    learnMore: "https://www.britannica.com/science/quantum-mechanics-physics"
   },
   {
     title: "Quantum Entanglement",
@@ -17,14 +17,14 @@ const quantumConcepts = [
     explanation: "Einstein called it 'spooky action at a distance'",
     codeParallel: "Event-driven architecture - changes in one component instantly trigger updates elsewhere",
     formula: "1/√2(|00⟩ + |11⟩)",
-    learnMore: "https://en.wikipedia.org/wiki/Quantum_entanglement"
+    learnMore: "https://www.britannica.com/science/quantum-entanglement"
   },
   {
     title: "Quantum Tunneling",
     concept: "Particles can pass through barriers that should be impossible to cross",
     explanation: "A ball rolling up a hill and appearing on the other side without having enough energy",
     codeParallel: "Callbacks and closures accessing variables outside their scope",
-    learnMore: "https://en.wikipedia.org/wiki/Quantum_tunnelling"
+    learnMore: "https://www.britannica.com/science/tunneling"
   },
   {
     title: "Observer Effect",
@@ -32,7 +32,7 @@ const quantumConcepts = [
     explanation: "Measuring a particle's position changes its momentum",
     codeParallel: "Debugging changes program behavior - console.log statements affect timing",
     formula: "ΔxΔp ≥ ℏ/2",  
-    learnMore: "https://en.wikipedia.org/wiki/Observer_effect_(physics)"
+    learnMore: "https://thedailyscience.org/what-role-does-the-observer-effect-play-in-quantum-experiments.html?utm_source=chatgpt.com"
   },
   {
     title: "Mathematical Beauty: Golden Ratio",
@@ -40,7 +40,7 @@ const quantumConcepts = [
     explanation: "Found in nature, art, and architecture - the most aesthetically pleasing proportion",
     codeParallel: "Perfect for UI spacing, layout ratios, and animation timing",
     formula: "φ = (1 + √5) / 2",
-    learnMore: "https://en.wikipedia.org/wiki/Golden_ratio"
+    learnMore: "https://www.britannica.com/science/golden-ratio"
   }
 ];
 

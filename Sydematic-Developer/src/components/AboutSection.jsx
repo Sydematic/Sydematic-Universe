@@ -121,7 +121,7 @@ const AboutSection = () => {
             and every user interaction is a moment of cosmic connection."
           </blockquote>
           <cite className="block text-lg text-muted-foreground">
-            — The Sydematic Manifesto
+            — Sydematic 
           </cite>
         </div>
       </div>

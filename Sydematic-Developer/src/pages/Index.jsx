@@ -78,7 +78,7 @@ const Index = () => {
               <a href="https://github.com/sydematic" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
                 GitHub
               </a>
-              <a href="https://linkedin.com/in/sydematic" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
+              <a href="https://www.linkedin.com/in/sydni-poteat-aa05b521b/" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
                 LinkedIn
               </a>
             </div>

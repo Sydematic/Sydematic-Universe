@@ -15,8 +15,11 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: "dist",
     rollupOptions: {
-      input: path.resolve(__dirname, "src/main.jsx"), // JS entry only
+      // Make sure the entry includes index.html, not just JS
+      input: path.resolve(__dirname, "index.html"),
     },
   },
 });
+

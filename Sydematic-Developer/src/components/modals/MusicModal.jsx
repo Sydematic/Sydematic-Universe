@@ -47,6 +47,10 @@ export const MusicModal = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
+  const currentSongIndexRef = useRef(currentSongIndex);
+
+  // Keep ref in sync with state
+  useEffect(() => { currentSongIndexRef.current = currentSongIndex; }, [currentSongIndex]);
 
   // Initialize audio once
   useEffect(() => {
@@ -55,7 +59,12 @@ export const MusicModal = () => {
 
     const updateTime = () => setCurrentTime(audio.currentTime);
     const updateDuration = () => setDuration(audio.duration);
-    const handleEnd = () => nextSong();
+
+    const handleEnd = () => {
+      if (currentSongIndexRef.current === null) return;
+      const nextIndex = (currentSongIndexRef.current + 1) % songs.length;
+      playSongAtIndex(nextIndex);
+    };
 
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("loadedmetadata", updateDuration);
@@ -73,12 +82,7 @@ export const MusicModal = () => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.pause();       // stop current
-    audio.src = "";      // clear source to reset cache
-    audio.load();
-
-    audio.src = songs[index].file; // set new file
-    audio.load();
+    audio.src = songs[index].file;
     audio.play();
 
     setCurrentSongIndex(index);

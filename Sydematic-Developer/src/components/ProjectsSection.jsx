@@ -11,25 +11,31 @@ const ProjectsSection = () => {
       title: "DVD Menu Navigation",
       description:
         "Created an interactive multimedia layout that mimics classic DVD menus, linking movie scenes and media previews. Gives an option to randomize a room to go into by choice with the help of a customized remote control cursor.",
-      tech: ["UI/UX","API", "JavaScript", "Vanilla CSS"],
+      tech: ["Html", "JavaScript", "Vanilla CSS"],
       category: "Web App",
       gradient: "bg-gradient-primary",
+      liveDemo: "https://sydematicstudios.netlify.app/",
+      github: "https://github.com/Sydematic/stage-2-SEA-Project"
     },
     {
       title: "Killer Instinct API DB Project",
       description:
-        "Built a custom API to deliver character data from the Killer Instinct game and integrated it with a dynamic front-end interface. Designed a search engine that filters results, empasizing accessibility.",
+        "Built a custom API to deliver character data from the Killer Instinct game and integrated it with a dynamic front-end interface. Designed a search engine that filters results, emphasizing accessibility.",
       tech: ["Javascript", "Custom API", "Vanilla CSS", "UI/UX"],
       category: "Productivity",
       gradient: "bg-gradient-accent",
+      liveDemo: "https://sydematics-killer-instinct-final-project.onrender.com/",
+      github: "https://github.com/Sydematic/Sydni_P_JS_API_Final_Project"
     },
     {
       title: "Hobby-Hub",
       description:
-         "A full-stack hobby and recipe app showcasing workouts, recipes, and meal information, built with React, Tailwind, and Node.js. Features interactive UI, API integrations, and personalized content for users.",
+         "A full-stack hobby app showcasing workouts, recipes, and meal information, built with React, Tailwind, and Node.js. Features interactive UI, API integrations, and personalized content for users.",
       tech: ["UI/UX", "React", "Tailwind", "Javascript"],
       category: "Full-Stack App",
       gradient: "bg-gradient-card",
+      liveDemo: "https://neon-parfait-729bbe.netlify.app/",
+      github: "https://github.com/Sydematic/hobby-hub"
     },
   ];
 
@@ -80,13 +86,21 @@ const ProjectsSection = () => {
                   ))}
                 </div>
                 <div className="flex gap-3 pt-4">
-                  <Button variant="aurora" size="sm" className="flex-1">
-                    <ExternalLink className="w-4 h-4" />
-                    Live Demo
+                  <Button
+                    variant="aurora"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => window.open(project.liveDemo, "_blank")}
+                  >
+                    <ExternalLink className="w-4 h-4" /> Live Demo
                   </Button>
-                  <Button variant="glass" size="sm" className="flex-1">
-                    <Github className="w-4 h-4" />
-                    Code
+                  <Button
+                    variant="glass"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => window.open(project.github, "_blank")}
+                  >
+                    <Github className="w-4 h-4" /> Code
                   </Button>
                 </div>
               </CardContent>
@@ -94,58 +108,63 @@ const ProjectsSection = () => {
           ))}
         </div>
 
-{/* Modals */}
-{projects.map(
-  (project) =>
-    openModal === project.title && (
-      <div
-        key={project.title}
-        className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] p-6"
-        onClick={() => setOpenModal(null)}
-      >
-        <div
-          className="bg-background rounded-lg max-w-lg w-full p-6 relative z-[10001]"
-          onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside modal
-        >
-          {/* X Button */}
-          <button
-            className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted/20 z-[10002]"
-            onClick={() => setOpenModal(null)}
-          >
-            <X className="w-5 h-5" />
-          </button>
-
-          <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
-          <p className="text-muted-foreground mb-4">{project.description}</p>
-
-          <div className="flex flex-wrap gap-2">
-            {project.tech.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded-full"
+        {/* Modals */}
+        {projects.map(
+          (project) =>
+            openModal === project.title && (
+              <div
+                key={project.title}
+                className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] p-6"
+                onClick={() => setOpenModal(null)}
               >
-                {tech}
-              </span>
-            ))}
-          </div>
+                <div
+                  className="bg-background rounded-lg max-w-lg w-full p-6 relative z-[10001]"
+                  onClick={(e) => e.stopPropagation()} // prevents closing when clicking inside modal
+                >
+                  {/* X Button */}
+                  <button
+                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted/20 z-[10002]"
+                    onClick={() => setOpenModal(null)}
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
 
-          <div className="flex gap-3 pt-4">
-            <Button variant="aurora" size="sm" className="flex-1">
-              <ExternalLink className="w-4 h-4" />
-              Live Demo
-            </Button>
-            <Button variant="glass" size="sm" className="flex-1">
-              <Github className="w-4 h-4" />
-              Code
-            </Button>
-          </div>
-        </div>
-      </div>
-    )
-)}
+                  <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
+                  <p className="text-muted-foreground mb-4">{project.description}</p>
 
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
 
-
+                  <div className="flex gap-3 pt-4">
+                    <Button
+                      variant="aurora"
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => window.open(project.liveDemo, "_blank")}
+                    >
+                      <ExternalLink className="w-4 h-4" /> Live Demo
+                    </Button>
+                    <Button
+                      variant="glass"
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => window.open(project.github, "_blank")}
+                    >
+                      <Github className="w-4 h-4" /> Code
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )
+        )}
       </div>
     </section>
   );

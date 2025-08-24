@@ -39,6 +39,15 @@ const filmScenes = [
     significance: "Connection to all past knowledge and power",
     codeConnection: "Inheritance and accessing the full stack of accumulated wisdom",
     learnMore: "https://www.youtube.com/watch?v=mZhtza3sCmg"
+  },
+   {
+    title: "Avatar",
+    movie: "Avatar",
+    year: 2009,
+    scene: "Jake learning from Neytiri: Network of energy that flows through all living things",
+    significance: "Network of energy that flows through all living things",
+    codeConnection: "Inheritance and accessing the full stack of accumulated wisdom",
+    learnMore: "https://www.youtube.com/watch?v=bFh08ftL9a8"
   }
 ];
 

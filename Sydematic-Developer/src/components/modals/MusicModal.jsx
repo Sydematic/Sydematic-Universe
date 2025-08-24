@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Music, Play, Pause } from "lucide-react";
+import { Music, Play, Pause, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 const songs = [
@@ -9,48 +9,53 @@ const songs = [
     artist: "Hans Zimmer",
     album: "Interstellar OST",
     inspiration: "Time bending complexity in code architecture",
-    file: "/ATLA.mp4",
+    file: "/cornfieldchase.mp4",
   },
   {
-    title: "The Theory of Everything",
-    artist: "Jóhann Jóhannsson",
-    album: "The Theory of Everything OST",
+    title: "Binary Sunset",
+    artist: "John Williams",
+    album: "Star Wawrs a new hope O.S.T.",
     inspiration: "Mathematical elegance in algorithm design",
-    file: "/music/theory.mp4",
+    file: "/starwars.mp4",
   },
   {
     title: "Birdsong",
     artist: "Flawed Mangoes",
     album: "Single Cover",
     inspiration: "Communication through universal languages",
-    file: "/music/arrival.mp4",
+    file: "/birdsong.mp4",
   },
   {
-    title: "Blade Runner 2049",
-    artist: "Hans Zimmer & Benjamin Wallfisch",
-    album: "Blade Runner 2049 OST",
+    title: "Time",
+    artist: "Hans Zimmer",
+    album: "Inception",
     inspiration: "Synthetic beauty in digital creation",
-    file: "/music/bladerunner.mp4",
+    file: "/time.mp4",
+  }, 
+  {
+    title: "The Bioluminescence of the Night",
+    artist: "James Horner",
+    album: "Avatar",
+    inspiration: "Synthetic beauty in digital creation",
+    file: "/bioluminescence.mp4",
   },
 ];
 
 export const MusicModal = () => {
-  const [currentSong, setCurrentSong] = useState(null);
+  const [currentSongIndex, setCurrentSongIndex] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
 
-  // Create the Audio object on mount
+  // Initialize audio once
   useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio();
-    }
-
-    const audio = audioRef.current;
+    const audio = new Audio();
+    audioRef.current = audio;
 
     const updateTime = () => setCurrentTime(audio.currentTime);
     const updateDuration = () => setDuration(audio.duration);
-    const handleEnd = () => setCurrentSong(null);
+    const handleEnd = () => nextSong();
 
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("loadedmetadata", updateDuration);
@@ -63,26 +68,70 @@ export const MusicModal = () => {
     };
   }, []);
 
-  const handlePlayPause = (song) => {
+  // Play song at a specific index
+  const playSongAtIndex = (index) => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (currentSong === song.title) {
-      audio.pause();
-      setCurrentSong(null);
+    audio.pause();       // stop current
+    audio.src = "";      // clear source to reset cache
+    audio.load();
+
+    audio.src = songs[index].file; // set new file
+    audio.load();
+    audio.play();
+
+    setCurrentSongIndex(index);
+    setIsPlaying(true);
+  };
+
+  // Play/pause for a specific song (modal buttons)
+  const handlePlayPauseForSong = (index) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (currentSongIndex === index) {
+      if (audio.paused) {
+        audio.play();
+        setIsPlaying(true);
+      } else {
+        audio.pause();
+        setIsPlaying(false);
+      }
     } else {
-      audio.src = song.file;
-      audio.play();
-      setCurrentSong(song.title);
+      playSongAtIndex(index);
     }
   };
 
-  const handleSeek = (e) => {
-    const seekTime = (e.target.value / 100) * duration;
-    if (audioRef.current) {
-      audioRef.current.currentTime = seekTime;
-      setCurrentTime(seekTime);
+  // Floating player play/pause
+  const handlePlayPause = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (currentSongIndex === null) {
+      const randomIndex = Math.floor(Math.random() * songs.length);
+      playSongAtIndex(randomIndex);
+    } else {
+      if (audio.paused) {
+        audio.play();
+        setIsPlaying(true);
+      } else {
+        audio.pause();
+        setIsPlaying(false);
+      }
     }
+  };
+
+  const nextSong = () => {
+    if (currentSongIndex === null) return;
+    const nextIndex = (currentSongIndex + 1) % songs.length;
+    playSongAtIndex(nextIndex);
+  };
+
+  const prevSong = () => {
+    if (currentSongIndex === null) return;
+    const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    playSongAtIndex(prevIndex);
   };
 
   const formatTime = (time) => {
@@ -92,63 +141,75 @@ export const MusicModal = () => {
     return `${minutes}:${seconds}`;
   };
 
+  const progress = duration ? (currentTime / duration) * 100 : 0;
+  const currentSong = currentSongIndex !== null ? songs[currentSongIndex] : null;
+  const isSongPlaying = (index) => currentSongIndex === index && isPlaying;
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="lg"
-          className="bg-gradient-primary border-primary/30 hover:border-primary/60 text-primary-foreground hover:shadow-glow-primary transition-all duration-500"
-        >
-          <Music className="w-5 h-5 mr-2" />
-          Musical Inspiration
-        </Button>
-      </DialogTrigger>
+    <>
+      {/* Floating Player */}
+      <div className="fixed bottom-4 right-4 z-50 p-3 bg-muted/70 rounded-xl shadow-lg backdrop-blur-md flex items-center space-x-2">
+        <span className="font-semibold text-foreground">
+          {currentSong ? currentSong.title : "Play a song"}
+        </span>
 
-      <DialogContent className="max-w-2xl bg-gradient-card border-primary/20 backdrop-blur-md">
-        <DialogHeader>
-          <DialogTitle className="text-2xl bg-gradient-primary bg-clip-text text-transparent">
-            🎵 Musical Inspiration
-          </DialogTitle>
-        </DialogHeader>
+        <div className="flex items-center space-x-1">
+          <Button variant="ghost" size="sm" onClick={prevSong} className="text-green-500 hover:text-green-400">
+            <ChevronLeft className="w-5 h-5" />
+          </Button>
 
-        <div className="space-y-4 max-h-[60vh] overflow-y-auto">
-          <p className="text-muted-foreground">
-            Music shapes my coding rhythm. Here are the soundtracks that inspire my development process:
-          </p>
+          <Button variant="ghost" size="sm" onClick={handlePlayPause} className="text-green-500 hover:text-green-400">
+            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+          </Button>
 
-          {songs.map((song) => {
-            const progress = duration ? (currentTime / duration) * 100 : 0;
+          <Button variant="ghost" size="sm" onClick={nextSong} className="text-green-500 hover:text-green-400">
+            <ChevronRight className="w-5 h-5" />
+          </Button>
+        </div>
+      </div>
 
-            return (
-              <div
-                key={song.title}
-                className="p-4 rounded-lg bg-muted/20 border border-primary/10 hover:border-primary/30 transition-all duration-300"
-              >
+      {/* Modal */}
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" size="lg" className="bg-gradient-primary border-primary/30 hover:border-primary/60">
+            <Music className="w-5 h-5 mr-2" />
+            Musical Inspiration
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent className="max-w-2xl bg-gradient-card border-primary/20 backdrop-blur-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl bg-gradient-primary bg-clip-text text-transparent">
+              🎵 Musical Inspiration
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4 max-h-[60vh] overflow-y-auto">
+            <p className="text-muted-foreground">
+              Music shapes my coding rhythm. Here are the soundtracks that inspire my development process:
+            </p>
+
+            {songs.map((song, index) => (
+              <div key={song.title} className="p-4 rounded-lg bg-muted/20 border border-primary/10">
                 <div className="flex items-center justify-between mb-2">
                   <div>
-                    <h4 className="font-semibold text-foreground">{song.title}</h4>
+                    <h4 className="font-semibold">{song.title}</h4>
                     <p className="text-sm text-muted-foreground">{song.artist} • {song.album}</p>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handlePlayPause(song)}
-                    className="hover:bg-primary/20"
-                  >
-                    {currentSong === song.title ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                  <Button variant="ghost" size="sm" onClick={() => handlePlayPauseForSong(index)} className="text-green-500">
+                    {isSongPlaying(index) ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                   </Button>
                 </div>
-                <p className="text-sm text-accent italic">"{song.inspiration}"</p>
+                <p className="text-sm italic text-accent">"{song.inspiration}"</p>
 
-                {currentSong === song.title && (
+                {isSongPlaying(index) && (
                   <div className="mt-2 flex flex-col gap-1">
                     <div className="flex justify-between text-xs text-muted-foreground">
                       <span>{formatTime(currentTime)}</span>
                       <span>{formatTime(duration)}</span>
                     </div>
                     <div
-                      className="relative h-2 rounded-lg bg-primary/30 overflow-hidden cursor-pointer"
+                      className="relative h-2 rounded-lg bg-primary/30 cursor-pointer"
                       onClick={(e) => {
                         const rect = e.currentTarget.getBoundingClientRect();
                         const clickX = e.clientX - rect.left;
@@ -157,25 +218,16 @@ export const MusicModal = () => {
                         setCurrentTime(newTime);
                       }}
                     >
-                      <div
-                        className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-accent transition-all duration-200"
-                        style={{ width: `${progress}%` }}
-                      />
+                      <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-accent"
+                        style={{ width: `${progress}%` }} />
                     </div>
                   </div>
                 )}
               </div>
-            );
-          })}
-
-          <div className="mt-6 p-4 rounded-lg bg-gradient-accent/10 border border-accent/20">
-            <p className="text-sm text-center text-muted-foreground">
-              <span className="text-accent font-medium">Pro tip:</span> I code best to instrumental soundtracks —
-              they create the perfect atmosphere for deep focus and creative problem-solving.
-            </p>
+            ))}
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };

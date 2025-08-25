@@ -34,7 +34,7 @@ const ProjectsSection = () => {
       tech: ["UI/UX", "React", "Tailwind", "Javascript"],
       category: "Full-Stack App",
       gradient: "bg-gradient-card",
-      liveDemo: "https://neon-parfait-729bbe.netlify.app/",
+      liveDemo: "https://hobby-hub-1-prq1.onrender.com",
       github: "https://github.com/Sydematic/hobby-hub"
     },
   ];

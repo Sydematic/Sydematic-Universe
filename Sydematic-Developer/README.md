@@ -1,73 +1,103 @@
-# Welcome to your Lovable project
+# 🌌 Sydematic's Portfolio Showcase
 
-## Project info
+Welcome to **Sydematic’s Portfolio Showcase** — an interactive journey through my creative world of tech, film, music, math and beyond.  
+Each section highlights a unique aspect of who I am, what I build, and what inspires me.  
 
-**URL**: https://lovable.dev/projects/da86f6d4-bafa-4f30-b1ea-ca13d43a55bb
 
-## How can I edit this code?
+## 📸 Screenshots by Page
 
-There are several ways of editing your application.
+### 🌌 Universe
+This section serves as the **central hub**, connecting everything in the portfolio.  
+![Universe Placeholder](./Screenshots/Universe.png)
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/da86f6d4-bafa-4f30-b1ea-ca13d43a55bb) and start prompting.
+### 🧑 About
+Get to know me — background, passions, and what drives my work.  
+![About Placeholder](./Screenshots/About.png)
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+### 💻 Projects
+Showcase of my coding, tech builds, and creative experiments.  
+![Projects Placeholder](./Screenshots/Project.png)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 🌟 The Big 3
+A deep-dive into my **three core influences** that shaped my journey.  
+![Big 3 Placeholder](./Screenshots/big3.png)
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 🎶 Musical Inspiration
+Highlighting the soundtracks, artists, and compositions that fuel my creativity.  
+![Musical Inspiration Placeholder](./Screenshots/musicalinspiration.png)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 🎬 Cinematic Moments
+Film stills, references, and impactful cinematic experiences that inspire my storytelling.  
+![Cinematic Moments Placeholder](./Screenshots/cinematicmoments.png)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+### 🧮 Quantum & Math
+Exploring patterns, equations, and the beauty of logic in creativity.  
+![Quantum & Math Placeholder](./Screenshots/quantummath.png)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+### 📩 Contact Us
+A way to reach out, collaborate, or just say hi. In this section I was able to create a custome response to real users and receive a notification as well showing they reached out!  
+<p align="center">
+  <img src="./Screenshots/Contactme1.png" alt="Contact Screenshot 1" width="45%"/>
+  <img src="./Screenshots/Contactme2.png" alt="Contact Screenshot 2" width="45%"/>
+   <img src="./Screenshots/Contactme3.png" alt="Contact Screenshot " width="45%"/>
+    <img src="./Screenshots/Contactme4.png" alt="Contact Screenshot 4" width="45%"/>
+</p>
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+### 📱 Mobile Layout
+There is also a nice clean mobile feature to view the project as well!
 
-This project is built with:
+![Contact Placeholder](./README%20Screenshots/contact_placeholder.png)
 
+---
+
+## 🚀 Tech Stack
+
+- HTML5  
+- CSS3  
+- JavaScript (Vanilla)  
+- Git & GitHub  
+
+---
+
+## 🔧 How to Run Locally
+
+```bash
+git clone https://github.com/sp184218/Sydni_P_JS_API_Final_Project.git
+cd Sydematic-Developer
+# Open index.html in your browser
+
+## 🚀 Tech Stack
 - Vite
-- TypeScript
+- JavaScript
 - React
-- shadcn-ui
+- Animation
 - Tailwind CSS
+- UI/UX
+- With the help of Lovable providing a nice template to work on. Due to time constraints, Lovable managed to help with getting the UI files done in a timely manner, while it was in tsx, I managed to translate it to jsx with some cool ai tools while being able to focus on javascript and styling much easier and less hassle. 
 
-## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/da86f6d4-bafa-4f30-b1ea-ca13d43a55bb) and click on Share -> Publish.
+💡 Notes
 
-## Can I connect a custom domain to my Lovable project?
+Best viewed on desktop, but can be viewed very well on mobile too!!
+ [🌌 Visit Sydematic Universe](https://sydematicuniverse.netlify.app/#hero)
 
-Yes, you can!
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+🧑‍💻 Author
+Sydni Poteat. aka Sydematic

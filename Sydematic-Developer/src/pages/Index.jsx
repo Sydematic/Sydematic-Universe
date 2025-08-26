@@ -80,8 +80,8 @@ const Index = () => {
           {/* Contact & Social */}
           <div className="text-center space-y-4">
             <div className="flex justify-center gap-6 text-sm">
-              <a href="mailto:contact@sydematic.dev" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
-                contact@sydematic.dev
+              <a href="https://linktr.ee/sydematic" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
+                Linktree
               </a>
               <a href="https://github.com/sydematic" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
                 GitHub

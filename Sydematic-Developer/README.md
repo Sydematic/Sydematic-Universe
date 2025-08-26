@@ -90,7 +90,11 @@ cd Sydematic-Developer
 - Animation
 - Tailwind CSS
 - UI/UX
-- With the help of Lovable providing a nice template to work on. Due to time constraints, Lovable managed to help with getting the UI files done in a timely manner, while it was in tsx, I managed to translate it to jsx with some cool ai tools while being able to focus on javascript and styling much easier and less hassle. 
+- With the help of Lovable providing a nice template to work on.
+Due to time constraints, Lovable managed to help with getting the
+UI files done in a timely manner, while it was in tsx, I managed to
+translate it to jsx with some cool ai tools while being able to focus
+on javascript and styling much easier and less hassle. 
 
 
 💡 Notes

@@ -20,7 +20,7 @@ Get to know me — background, passions, and what drives my work.
 
 ### 💻 Projects
 Showcase of my coding, tech builds, and creative experiments.  
-![Projects Placeholder](./Screenshots/Project.png)
+![Projects Placeholder](./Screenshots/Projects.png)
 
 ---
 

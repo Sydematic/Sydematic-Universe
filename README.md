@@ -25,7 +25,8 @@ cd Sydematic-Developer
 💡 Notes
 
 Best viewed on desktop, but can be viewed very well on mobile too!!
- [🌌 Visit Sydematic Universe](https://sydematicuniverse.netlify.app/#hero)
+[![Portfolio](https://img.shields.io/badge/Visit-Portfolio-purple?style=for-the-badge)](https://sydematicuniverse.netlify.app/#hero)
+
 
 
 

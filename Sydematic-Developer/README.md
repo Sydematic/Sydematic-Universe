@@ -62,7 +62,7 @@ A way to reach out, collaborate, or just say hi. In this section I was able to c
 ### 📱 Mobile Layout
 There is also a nice clean mobile feature to view the project as well!
 
-![Contact Placeholder](./README%20Screenshots/contact_placeholder.png)
+![Mobile Placeholder](./Screenshots/mobile.jpg)
 
 ---
 
@@ -78,7 +78,7 @@ There is also a nice clean mobile feature to view the project as well!
 ## 🔧 How to Run Locally
 
 ```bash
-git clone https://github.com/sp184218/Sydni_P_JS_API_Final_Project.git
+git clone https://github.com/Sydematic/Sydematic-Universe.git
 cd Sydematic-Developer
 # Open index.html in your browser
 

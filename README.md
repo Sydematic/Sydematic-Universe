@@ -7,7 +7,7 @@ Each section highlights a unique aspect of who I am, what I build, and what insp
 ## 🔧 How to Run Locally
 
 ```bash
-git clone https://github.com/sp184218/Sydni_P_JS_API_Final_Project.git
+git clone https://github.com/Sydematic/Sydematic-Universe.git
 cd Sydematic-Developer
 # Open index.html in your browser
 ```

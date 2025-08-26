@@ -49,7 +49,8 @@ Exploring patterns, equations, and the beauty of logic in creativity.
 ---
 
 ### 📩 Contact Us
-A way to reach out, collaborate, or just say hi. In this section I was able to create a custome response to real users and receive a notification as well showing they reached out!  
+A way to reach out, collaborate, or just say hi. In this section I was able to create
+a custome response to real users and receive a notification as well showing they reached out!  
 <p align="center">
   <img src="./Screenshots/Contactme1.png" alt="Contact Screenshot 1" width="45%"/>
   <img src="./Screenshots/Contactme2.png" alt="Contact Screenshot 2" width="45%"/>

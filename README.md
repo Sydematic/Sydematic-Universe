@@ -3,77 +3,7 @@
 Welcome to **Sydematic’s Portfolio Showcase** — an interactive journey through my creative world of tech, film, music, math and beyond.  
 Each section highlights a unique aspect of who I am, what I build, and what inspires me.  
 
-
-## 📸 Screenshots by Page
-
-### 🌌 Universe
-This section serves as the **central hub**, connecting everything in the portfolio.  
-![Universe Placeholder](./Screenshots/Universe.png)
-
----
-
-### 🧑 About
-Get to know me — background, passions, and what drives my work.  
-![About Placeholder](./Screenshots/About.png)
-
----
-
-### 💻 Projects
-Showcase of my coding, tech builds, and creative experiments.  
-![Projects Placeholder](./Screenshots/Project.png)
-
----
-
-### 🌟 The Big 3
-A deep-dive into my **three core influences** that shaped my journey.  
-![Big 3 Placeholder](./Screenshots/big3.png)
-
----
-
-### 🎶 Musical Inspiration
-Highlighting the soundtracks, artists, and compositions that fuel my creativity.  
-![Musical Inspiration Placeholder](./Screenshots/musicalinspiration.png)
-
----
-
-### 🎬 Cinematic Moments
-Film stills, references, and impactful cinematic experiences that inspire my storytelling.  
-![Cinematic Moments Placeholder](./Screenshots/cinematicmoments.png)
-
----
-
-### 🧮 Quantum & Math
-Exploring patterns, equations, and the beauty of logic in creativity.  
-![Quantum & Math Placeholder](./Screenshots/quantummath.png)
-
----
-
-### 📩 Contact Us
-A way to reach out, collaborate, or just say hi. In this section I was able to create a custome response to real users and receive a notification as well showing they reached out!  
-<p align="center">
-  <img src="./Screenshots/Contactme1.png" alt="Contact Screenshot 1" width="45%"/>
-  <img src="./Screenshots/Contactme2.png" alt="Contact Screenshot 2" width="45%"/>
-   <img src="./Screenshots/Contactme3.png" alt="Contact Screenshot " width="45%"/>
-    <img src="./Screenshots/Contactme4.png" alt="Contact Screenshot 4" width="45%"/>
-</p>
-
----
-
-### 📱 Mobile Layout
-There is also a nice clean mobile feature to view the project as well!
-
-![Contact Placeholder](./README%20Screenshots/contact_placeholder.png)
-
----
-
-## 🚀 Tech Stack
-
-- HTML5  
-- CSS3  
-- JavaScript (Vanilla)  
-- Git & GitHub  
-
----
+## For more details about the webpage check out the Readme file in my Sydematic-Developer folder.
 
 ## 🔧 How to Run Locally
 

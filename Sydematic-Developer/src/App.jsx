@@ -4,8 +4,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Universe from "./pages/Universe";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import CustomCursor from "@/components/CustomCursor"; // import it here
 
 const queryClient = new QueryClient();
 
@@ -16,9 +18,13 @@ export default function App() {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          {/* Global Custom Cursor */}
+          <CustomCursor />
+
           <div className="min-h-screen bg-gray-50 text-gray-900 p-4">
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/universe" element={<Universe />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
@@ -27,3 +33,4 @@ export default function App() {
     </QueryClientProvider>
   );
 }
+

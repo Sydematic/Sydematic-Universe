@@ -6,8 +6,10 @@ import { MusicModal } from "@/components/modals/MusicModal";
 import { FilmModal } from "@/components/modals/FilmModal";
 import { QuantumModal } from "@/components/modals/QuantumModal";
 import { ContactModal } from "@/components/modals/ContactModal"; // New Contact Modal
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background relative overflow-x-hidden">
       <CustomCursor />
@@ -16,9 +18,12 @@ const Index = () => {
       <nav className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-primary/20">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent cursor-project"
+              onClick={() => navigate("/")}
+              >
               Sydematic
             </div>
+
             <div className="hidden md:flex items-center gap-8 text-sm font-medium">
               <a href="#hero" className="text-muted-foreground hover:text-primary transition-colors cursor-project">
                 Universe

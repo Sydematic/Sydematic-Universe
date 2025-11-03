@@ -50,7 +50,7 @@ Exploring patterns, equations, and the beauty of logic in creativity.
 
 ### 📩 Contact Us
 A way to reach out, collaborate, or just say hi. In this section I was able to create
-a custome response to real users and receive a notification as well showing they reached out!  
+a custom response to real users and receive a notification as well showing they reached out!  
 <p align="center">
   <img src="./Screenshots/Contactme1.png" alt="Contact Screenshot 1" width="45%"/>
   <img src="./Screenshots/Contactme2.png" alt="Contact Screenshot 2" width="45%"/>
@@ -90,7 +90,11 @@ cd Sydematic-Developer
 - Animation
 - Tailwind CSS
 - UI/UX
-- With the help of Lovable providing a nice template to work on. Due to time constraints, Lovable managed to help with getting the UI files done in a timely manner, while it was in tsx, I managed to translate it to jsx with some cool ai tools while being able to focus on javascript and styling much easier and less hassle. 
+- With the help of Lovable providing a nice template to work on.
+Due to time constraints, Lovable managed to help with getting the
+UI files done in a timely manner, while it was in tsx, I managed to
+translate it to jsx with some cool ai tools while being able to focus
+on javascript and styling much easier and less hassle. 
 
 
 💡 Notes

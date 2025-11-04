@@ -5,15 +5,44 @@ import { useNavigate } from "react-router-dom";
 const Universe = () => {
   const navigate = useNavigate();
 
+  const handleNavigation = (room) => {
+    switch (room) {
+      case "Sydematic’s Room":
+        navigate("/sydematics-room");
+        break;
+      case "Game Room":
+        navigate("/game-room");
+        break;
+      case "Music Room":
+        navigate("/music-room");
+        break;
+      case "Movie Room":
+        navigate("/movie-room");
+        break;
+      case "Math Room":
+        navigate("/math-room");
+        break;
+      case "Play Preview":
+        // for now, just log or add a popup
+        console.log("Preview feature coming soon!");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden bg-background text-foreground">
       {/* Aurora Background Animation */}
       <div className="absolute inset-0 bg-gradient-aurora opacity-20 animate-aurora-dance" />
-      
+
       {/* Floating Orbs / Stars */}
       <div className="absolute top-10 left-20 w-24 h-24 rounded-full bg-primary/10 blur-3xl animate-float" />
-      <div className="absolute bottom-10 right-32 w-16 h-16 rounded-full bg-accent/10 blur-2xl animate-float" style={{ animationDelay: '2s' }} />
-      
+      <div
+        className="absolute bottom-10 right-32 w-16 h-16 rounded-full bg-accent/10 blur-2xl animate-float"
+        style={{ animationDelay: "2s" }}
+      />
+
       {/* Header / DVD Navigator */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-md border-b border-primary/20 py-4 px-8 flex justify-between items-center">
         <button
@@ -23,11 +52,15 @@ const Universe = () => {
           Sydematic
         </button>
         <nav className="flex gap-6 text-sm font-medium">
-          <button className="hover:text-primary transition-colors">Closet</button>
-          <button className="hover:text-primary transition-colors">Game Room</button>
-          <button className="hover:text-primary transition-colors">Car Shop</button>
-          <button className="hover:text-primary transition-colors">Movie Room</button>
-          <button className="hover:text-primary transition-colors">Math Room</button>
+          {["Sydematic's Room", "Game Room", "Music Room", "Movie Room", "Math Room"].map((item) => (
+            <button
+              key={item}
+              onClick={() => handleNavigation(item.replace("’", "'"))}
+              className="hover:text-primary transition-colors"
+            >
+              {item}
+            </button>
+          ))}
         </nav>
       </header>
 
@@ -51,10 +84,11 @@ const Universe = () => {
             Select Your Destination
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {["Play Preview", "Sydematic’s Closet", "Game Room", "Car Shop", "Movie Room", "Math Room"].map((item) => (
+            {["Play Preview", "Sydematic’s Room", "Game Room", "Music Room", "Movie Room", "Math Room"].map((item) => (
               <button
                 key={item}
-                className="bg-background/40 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium hover:bg-primary/10 hover:scale-105 transition-all cursor-project"
+                onClick={() => handleNavigation(item)}
+                className="bg-background/40 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium hover:bg-primary/10 hover:scale-105 transition-all cursor-pointer"
               >
                 {item}
               </button>

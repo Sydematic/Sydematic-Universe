@@ -148,3 +148,19 @@
     @apply bg-primary/70;
   }
 }
+
+.btn-portal {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  color: white;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-portal:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}

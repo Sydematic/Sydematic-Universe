@@ -1,29 +1,225 @@
 // src/pages/SydematicsRoom.jsx
-import React, { useEffect, useRef } from "react";
+import React, { Suspense, useRef, useState, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls, Sparkles } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
 
-const SydematicsRoom = () => {
-  const navigate = useNavigate();
-  const mannequinRef = useRef(null);
+/**
+ * GeometricMannequin
+ * - Procedural mannequin built from simple 3D primitives (no model file).
+ * - Neutral body proportions (gender-neutral / non-binary friendly).
+ * - Smooth metallic lighting and subtle emissive tones.
+ */
+function GeometricMannequin() {
+  const ref = useRef();
 
-  useEffect(() => {
-    // Placeholder animation logic (later replaced by 3D Three.js mannequin)
-    const mannequin = mannequinRef.current;
-    let angle = 0;
-    const rotate = () => {
-      angle += 0.5;
-      mannequin.style.transform = `rotateY(${angle}deg)`;
-      requestAnimationFrame(rotate);
-    };
-    rotate();
-  }, []);
+  useFrame((_, delta) => {
+    if (ref.current) ref.current.rotation.y += delta * 0.1;
+  });
+
+  const materialProps = {
+    color: "#c9b7ff",
+    metalness: 0.6,
+    roughness: 0.3,
+    emissive: "#9b8cff",
+    emissiveIntensity: 0.15,
+  };
+
+  return (
+   <group ref={ref} position={[0, 0, 0]} scale={[0.4, 0.4, 0.4]}>
+
+      {/* Head */}
+      <mesh position={[0, 1.6, 0]}>
+        <sphereGeometry args={[0.25, 32, 32]} />
+        <meshStandardMaterial {...materialProps} />
+      </mesh>
+
+      {/* Neck */}
+      <mesh position={[0, 1.35, 0]}>
+        <cylinderGeometry args={[0.08, 0.08, 0.2, 16]} />
+        <meshStandardMaterial {...materialProps} />
+      </mesh>
+
+    {/* Torso */}
+<mesh position={[0, 0.75, 0]}>
+  {/* narrower top + slightly shorter */}
+  <cylinderGeometry args={[0.22, 0.28, 1.0, 32]} />
+  <meshStandardMaterial {...materialProps} />
+</mesh>
+
+{/* Arms */}
+<mesh position={[0.32, 1.0, 0]} rotation={[0, 0, -Math.PI / 14]}>
+  <cylinderGeometry args={[0.06, 0.06, 0.85, 16]} />
+  <meshStandardMaterial {...materialProps} />
+</mesh>
+<mesh position={[-0.32, 1.0, 0]} rotation={[0, 0, Math.PI / 14]}>
+  <cylinderGeometry args={[0.06, 0.06, 0.85, 16]} />
+  <meshStandardMaterial {...materialProps} />
+</mesh>
+
+{/* Hips */}
+<mesh position={[0, 0.1, 0]}>
+  {/* slimmer and smoother transition from torso */}
+  <cylinderGeometry args={[0.18, 0.22, 0.35, 16]} />
+  <meshStandardMaterial {...materialProps} />
+</mesh>
+
+
+      {/* Legs */}
+      <mesh position={[0.15, -0.7, 0]} rotation={[0, 0, -0.03]}>
+        <cylinderGeometry args={[0.1, 0.1, 1.2, 16]} />
+        <meshStandardMaterial {...materialProps} />
+      </mesh>
+      <mesh position={[-0.15, -0.7, 0]} rotation={[0, 0, 0.03]}>
+        <cylinderGeometry args={[0.1, 0.1, 1.2, 16]} />
+        <meshStandardMaterial {...materialProps} />
+      </mesh>
+    </group>
+  );
+}
+
+/**
+ * InnerScene
+ * - Renders inside <Canvas>
+ * - Contains the rotating geometric mannequin and sparkles.
+ */
+function InnerScene() {
+  const groupRef = useRef();
+
+  useFrame((state, delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.1;
+    }
+  });
+
+  return (
+    <>
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[3, 5, 2]} intensity={1} />
+      <Sparkles
+        count={600}
+        size={4}
+        scale={[2.2, 2.6, 2.2]}
+        noise={0.6}
+        speed={0.4}
+        position={[0, 0.2, 0]}
+      />
+      <Suspense fallback={null}>
+        <group ref={groupRef}>
+          <GeometricMannequin />
+        </group>
+      </Suspense>
+      <OrbitControls
+        enablePan={false}
+        enableZoom={false}
+        rotateSpeed={0.6}
+        autoRotate={false}
+      />
+    </>
+  );
+}
+
+/**
+ * MannequinCanvas
+ * - Canvas wrapper for 3D mannequin display.
+ */
+function MannequinCanvas() {
+  return (
+    <Canvas camera={{ position: [0, 0, 3.2], fov: 40 }}>
+      <InnerScene />
+    </Canvas>
+  );
+}
+
+export default function SydematicsRoom() {
+  const navigate = useNavigate();
+
+  const [activeOutfit, setActiveOutfit] = useState(null);
+  const [activeAccessory, setActiveAccessory] = useState(null);
+  const [downloadBusy, setDownloadBusy] = useState(false);
+
+  const clothesData = useMemo(
+    () => [
+      {
+        id: "neon",
+        name: "Neon Streetwear",
+        desc: "Cyber casual (transparent PNG)",
+        src: "/outfits/neon-streetwear.png",
+      },
+      {
+        id: "cozy",
+        name: "Cozy Chic",
+        desc: "Neutral comfy vibe",
+        src: "/outfits/cozy-chic.png",
+      },
+      {
+        id: "holo",
+        name: "Holographic Fit",
+        desc: "Reflective future look",
+        src: "/outfits/holographic-fit.png",
+      },
+      {
+        id: "mono",
+        name: "Minimal Monochrome",
+        desc: "Sleek all-black silhouette",
+        src: "/outfits/minimal-monochrome.png",
+      },
+    ],
+    []
+  );
+
+  const clearOutfits = () => {
+    setActiveOutfit(null);
+    setActiveAccessory(null);
+  };
+
+  const downloadScreenshot = async () => {
+    try {
+      setDownloadBusy(true);
+      const el = document.getElementById("mannequin-stage");
+      if (!el) return;
+      const canvas = el.querySelector("canvas");
+      if (!canvas) {
+        alert("No WebGL canvas found — is the model still loading?");
+        return;
+      }
+
+      const tmp = document.createElement("canvas");
+      tmp.width = canvas.width;
+      tmp.height = canvas.height;
+      const ctx = tmp.getContext("2d");
+
+      ctx.drawImage(canvas, 0, 0);
+
+      const drawImg = async (src) => {
+        if (!src) return;
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = src;
+        await img.decode();
+        ctx.drawImage(img, 0, 0, tmp.width, tmp.height);
+      };
+
+      if (activeOutfit) await drawImg(activeOutfit);
+      if (activeAccessory) await drawImg(activeAccessory);
+
+      const link = document.createElement("a");
+      link.download = "sydematic-look.png";
+      link.href = tmp.toDataURL("image/png");
+      link.click();
+    } catch (err) {
+      console.error(err);
+      alert("Could not create screenshot. Check console.");
+    } finally {
+      setDownloadBusy(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-primary/10 text-foreground flex flex-col items-center pt-24 relative overflow-hidden">
-      {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-md border-b border-primary/20 py-4 px-8 flex justify-between items-center">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/universe")}
           className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent hover:opacity-80 transition-opacity"
         >
           ← Back to Universe
@@ -33,59 +229,83 @@ const SydematicsRoom = () => {
         </h1>
       </header>
 
-      {/* Intro */}
       <div className="text-center mt-24 space-y-4">
-        <h2 className="text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent animate-fade-in">
+        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent">
           Fashion, Aesthetics & Expression
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          A digital wardrobe inspired by creativity and personal style.
-          Here you’ll find outfit inspirations, avatar looks, and future
-          features like 3D mannequins and virtual try-ons.
+          Click an outfit to try it on the starry mannequin. Layers stack and you
+          can download your look.
         </p>
       </div>
 
-      {/* Mannequin Placeholder */}
-      <div className="mt-12 w-[250px] h-[400px] bg-card/30 border border-primary/30 rounded-2xl flex items-center justify-center backdrop-blur-lg shadow-lg hover:scale-105 transition-transform">
-        <div
-          ref={mannequinRef}
-          className="w-24 h-64 bg-gradient-to-b from-primary/40 to-accent/40 rounded-full"
-          style={{
-            transformStyle: "preserve-3d",
-            transition: "transform 0.5s ease",
-          }}
-        />
+      <div
+        id="mannequin-stage"
+        className="relative mt-8 w-[380px] h-[520px] bg-card/10 border border-primary/20 rounded-2xl overflow-hidden"
+      >
+        <div className="absolute inset-0">
+          <MannequinCanvas />
+        </div>
+
+        {activeOutfit && (
+          <img
+            src={activeOutfit}
+            alt="active outfit"
+            className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+          />
+        )}
+        {activeAccessory && (
+          <img
+            src={activeAccessory}
+            alt="active accessory"
+            className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+          />
+        )}
       </div>
 
-      {/* Outfit Grid (Static Mockup for Now) */}
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 px-8 max-w-5xl">
-        {[
-          { title: "Avatar Look #1", desc: "Casual futuristic style" },
-          { title: "Inspo Board", desc: "Neon core meets cozy vibes" },
-          { title: "Style of the Day", desc: "Reflective and radiant" },
-        ].map((item, index) => (
-          <div
-            key={index}
-            className="bg-background/30 border border-primary/20 rounded-xl p-6 text-center hover:bg-primary/10 transition-all backdrop-blur-md"
-          >
-            <div className="w-full h-40 bg-gradient-to-tr from-accent/30 to-primary/30 rounded-lg mb-4" />
-            <h3 className="text-lg font-semibold">{item.title}</h3>
-            <p className="text-sm text-muted-foreground">{item.desc}</p>
+      <div className="mt-10 w-full max-w-6xl px-6">
+        <h3 className="text-2xl font-semibold mb-4">Wardrobe — Click to Try On</h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+          {clothesData.map((c) => (
+            <div
+              key={c.id}
+              className="cursor-pointer rounded-lg overflow-hidden border border-primary/20 bg-card/20 hover:scale-105 transition-transform"
+              onClick={() => setActiveOutfit(c.src)}
+            >
+              <img src={c.src} alt={c.name} className="w-full h-44 object-cover" />
+              <div className="p-3">
+                <div className="font-semibold">{c.name}</div>
+                <div className="text-sm text-muted-foreground">{c.desc}</div>
+              </div>
+            </div>
+          ))}
+
+          <div className="flex flex-col gap-2">
+            <button
+              className="px-4 py-2 rounded-md border border-primary/30 bg-background/30"
+              onClick={() => setActiveAccessory("/outfits/mini-accessory.png")}
+            >
+              Add Accessory
+            </button>
+
+            <button
+              className="px-4 py-2 rounded-md border border-primary/30 bg-background/30"
+              onClick={() => clearOutfits()}
+            >
+              Clear Outfit
+            </button>
+
+            <button
+              className="px-4 py-2 rounded-md border border-primary/30 bg-background/30"
+              onClick={() => downloadScreenshot()}
+              disabled={downloadBusy}
+            >
+              {downloadBusy ? "Preparing..." : "Download Look"}
+            </button>
           </div>
-        ))}
-      </div>
-
-      {/* Action Buttons */}
-      <div className="mt-12 flex gap-4">
-        <button className="bg-primary/20 border border-primary/40 px-6 py-3 rounded-lg font-medium hover:bg-primary/30 transition-all">
-          Try On Feature (Coming Soon)
-        </button>
-        <button className="bg-accent/20 border border-accent/40 px-6 py-3 rounded-lg font-medium hover:bg-accent/30 transition-all">
-          Create Outfit
-        </button>
+        </div>
       </div>
     </div>
   );
-};
-
-export default SydematicsRoom;
+}

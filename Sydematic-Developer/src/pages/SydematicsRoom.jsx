@@ -3,6 +3,8 @@ import React, { Suspense, useRef, useState, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Sparkles } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { useLoader } from '@react-three/fiber';
 
 /**
  * GeometricMannequin
@@ -10,6 +12,19 @@ import { useNavigate } from "react-router-dom";
  * - Neutral body proportions (gender-neutral / non-binary friendly).
  * - Smooth metallic lighting and subtle emissive tones.
  */
+function ImportedMannequin() {
+  const gltf = useLoader(GLTFLoader, '/modelgirl.glb');
+
+  return (
+    <primitive
+      object={gltf.scene}
+      scale= {[2.5, 2.5, 2.5]} // adjust if too big/small
+      position={[0, 0, 0]}     // adjust vertically if needed
+      rotation={[0, 0, 0]} // optional: face forward
+    />
+  );
+}
+
 function GeometricMannequin() {
   const ref = useRef();
 
@@ -80,56 +95,92 @@ function GeometricMannequin() {
 
 /**
  * InnerScene
- * - Renders inside <Canvas>
- * - Contains the rotating geometric mannequin and sparkles.
+ * - Displays the imported 3D mannequin and background sparkles.
+ * - Only the mannequin rotates on drag (not the room).
  */
 function InnerScene() {
-  const groupRef = useRef();
+  const mannequinRef = useRef();
+  const [isDragging, setIsDragging] = useState(false);
+  const [rotationY, setRotationY] = useState(0);
 
-  useFrame((state, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.1;
+  const handlePointerDown = () => setIsDragging(true);
+  const handlePointerUp = () => setIsDragging(false);
+  const handlePointerMove = (e) => {
+    if (isDragging) {
+      // Adjust drag sensitivity by multiplying movementX
+      setRotationY((prev) => prev + e.movementX * 0.01);
     }
-  });
+  };
 
   return (
-    <>
-      <ambientLight intensity={0.8} />
+    <group
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerUp}
+    >
+      {/* Lights */}
+      <ambientLight intensity={5} />
       <directionalLight position={[3, 5, 2]} intensity={1} />
-      <Sparkles
-        count={600}
-        size={4}
-        scale={[2.2, 2.6, 2.2]}
-        noise={0.6}
-        speed={0.4}
-        position={[0, 0.2, 0]}
-      />
+
       <Suspense fallback={null}>
-        <group ref={groupRef}>
-          <GeometricMannequin />
+        {/* CLOSET ROOM */}
+        <group>
+          {/* Floor */}
+          <mesh position={[0, -1.5, 0]}>
+            <boxGeometry args={[6, 0.1, 4]} />
+            <meshStandardMaterial color="#d6d6d6" metalness={0.3} roughness={0.6} />
+          </mesh>
+
+          {/* Back Wall */}
+          <mesh position={[0, 1, -2]}>
+            <boxGeometry args={[6, 4, 0.1]} />
+            <meshStandardMaterial color="#efefef" metalness={0.2} roughness={0.8} />
+          </mesh>
+
+          {/* Left Wall */}
+          <mesh position={[-3, 1, 0]}>
+            <boxGeometry args={[0.1, 4, 4]} />
+            <meshStandardMaterial color="#f3f3f3" />
+          </mesh>
+
+          {/* Right Wall */}
+          <mesh position={[3, 1, 0]}>
+            <boxGeometry args={[0.1, 4, 4]} />
+            <meshStandardMaterial color="#f3f3f3" />
+          </mesh>
+        </group>
+
+        {/* MANNEQUIN - Rotates on drag only */}
+        <group
+          ref={mannequinRef}
+          position={[0, 0.5, 0]}
+          scale={[1.5, 1.5, 1.5]}
+          rotation={[0, rotationY, 0]}
+        >
+          <ImportedMannequin />
         </group>
       </Suspense>
-      <OrbitControls
-        enablePan={false}
-        enableZoom={false}
-        rotateSpeed={0.6}
-        autoRotate={false}
-      />
-    </>
+    </group>
   );
 }
 
+
 /**
  * MannequinCanvas
- * - Canvas wrapper for 3D mannequin display.
+ * - Canvas wrapper with optimized camera placement.
  */
 function MannequinCanvas() {
   return (
-    <Canvas camera={{ position: [0, 0, 3.2], fov: 40 }}>
+    <Canvas camera={{ position: [0, 1.5, 7], fov: 40 }}>
       <InnerScene />
     </Canvas>
   );
 }
+
+
+
+
 
 export default function SydematicsRoom() {
   const navigate = useNavigate();
@@ -239,13 +290,14 @@ export default function SydematicsRoom() {
         </p>
       </div>
 
-      <div
-        id="mannequin-stage"
-        className="relative mt-8 w-[380px] h-[520px] bg-card/10 border border-primary/20 rounded-2xl overflow-hidden"
-      >
-        <div className="absolute inset-0">
-          <MannequinCanvas />
-        </div>
+<div
+  id="mannequin-stage"
+  className="relative mt-8 w-full h-screen bg-card/10 border border-primary/20 rounded-2xl overflow-hidden"
+>
+  <div className="absolute inset-0">
+    <MannequinCanvas />
+  </div>
+
 
         {activeOutfit && (
           <img

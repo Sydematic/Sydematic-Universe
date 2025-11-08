@@ -1,220 +1,20 @@
 // src/pages/SydematicsRoom.jsx
-import React, { Suspense, useRef, useState, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Sparkles } from "@react-three/drei";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { useLoader } from '@react-three/fiber';
-
-/**
- * GeometricMannequin
- * - Procedural mannequin built from simple 3D primitives (no model file).
- * - Neutral body proportions (gender-neutral / non-binary friendly).
- * - Smooth metallic lighting and subtle emissive tones.
- */
-function ImportedMannequin() {
-  const gltf = useLoader(GLTFLoader, '/modelgirl.glb');
-
-  return (
-    <primitive
-      object={gltf.scene}
-      scale= {[2.5, 2.5, 2.5]} // adjust if too big/small
-      position={[0, 0, 0]}     // adjust vertically if needed
-      rotation={[0, 0, 0]} // optional: face forward
-    />
-  );
-}
-
-function GeometricMannequin() {
-  const ref = useRef();
-
-  useFrame((_, delta) => {
-    if (ref.current) ref.current.rotation.y += delta * 0.1;
-  });
-
-  const materialProps = {
-    color: "#c9b7ff",
-    metalness: 0.6,
-    roughness: 0.3,
-    emissive: "#9b8cff",
-    emissiveIntensity: 0.15,
-  };
-
-  return (
-   <group ref={ref} position={[0, 0, 0]} scale={[0.4, 0.4, 0.4]}>
-
-      {/* Head */}
-      <mesh position={[0, 1.6, 0]}>
-        <sphereGeometry args={[0.25, 32, 32]} />
-        <meshStandardMaterial {...materialProps} />
-      </mesh>
-
-      {/* Neck */}
-      <mesh position={[0, 1.35, 0]}>
-        <cylinderGeometry args={[0.08, 0.08, 0.2, 16]} />
-        <meshStandardMaterial {...materialProps} />
-      </mesh>
-
-    {/* Torso */}
-<mesh position={[0, 0.75, 0]}>
-  {/* narrower top + slightly shorter */}
-  <cylinderGeometry args={[0.22, 0.28, 1.0, 32]} />
-  <meshStandardMaterial {...materialProps} />
-</mesh>
-
-{/* Arms */}
-<mesh position={[0.32, 1.0, 0]} rotation={[0, 0, -Math.PI / 14]}>
-  <cylinderGeometry args={[0.06, 0.06, 0.85, 16]} />
-  <meshStandardMaterial {...materialProps} />
-</mesh>
-<mesh position={[-0.32, 1.0, 0]} rotation={[0, 0, Math.PI / 14]}>
-  <cylinderGeometry args={[0.06, 0.06, 0.85, 16]} />
-  <meshStandardMaterial {...materialProps} />
-</mesh>
-
-{/* Hips */}
-<mesh position={[0, 0.1, 0]}>
-  {/* slimmer and smoother transition from torso */}
-  <cylinderGeometry args={[0.18, 0.22, 0.35, 16]} />
-  <meshStandardMaterial {...materialProps} />
-</mesh>
-
-
-      {/* Legs */}
-      <mesh position={[0.15, -0.7, 0]} rotation={[0, 0, -0.03]}>
-        <cylinderGeometry args={[0.1, 0.1, 1.2, 16]} />
-        <meshStandardMaterial {...materialProps} />
-      </mesh>
-      <mesh position={[-0.15, -0.7, 0]} rotation={[0, 0, 0.03]}>
-        <cylinderGeometry args={[0.1, 0.1, 1.2, 16]} />
-        <meshStandardMaterial {...materialProps} />
-      </mesh>
-    </group>
-  );
-}
-
-/**
- * InnerScene
- * - Displays the imported 3D mannequin and background sparkles.
- * - Only the mannequin rotates on drag (not the room).
- */
-function InnerScene() {
-  const mannequinRef = useRef();
-  const [isDragging, setIsDragging] = useState(false);
-  const [rotationY, setRotationY] = useState(0);
-
-  const handlePointerDown = () => setIsDragging(true);
-  const handlePointerUp = () => setIsDragging(false);
-  const handlePointerMove = (e) => {
-    if (isDragging) {
-      // Adjust drag sensitivity by multiplying movementX
-      setRotationY((prev) => prev + e.movementX * 0.01);
-    }
-  };
-
-  return (
-    <group
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerUp}
-    >
-      {/* Lights */}
-      <ambientLight intensity={5} />
-      <directionalLight position={[3, 5, 2]} intensity={1} />
-
-      <Suspense fallback={null}>
-        {/* CLOSET ROOM */}
-        <group>
-          {/* Floor */}
-          <mesh position={[0, -1.5, 0]}>
-            <boxGeometry args={[6, 0.1, 4]} />
-            <meshStandardMaterial color="#d6d6d6" metalness={0.3} roughness={0.6} />
-          </mesh>
-
-          {/* Back Wall */}
-          <mesh position={[0, 1, -2]}>
-            <boxGeometry args={[6, 4, 0.1]} />
-            <meshStandardMaterial color="#efefef" metalness={0.2} roughness={0.8} />
-          </mesh>
-
-          {/* Left Wall */}
-          <mesh position={[-3, 1, 0]}>
-            <boxGeometry args={[0.1, 4, 4]} />
-            <meshStandardMaterial color="#f3f3f3" />
-          </mesh>
-
-          {/* Right Wall */}
-          <mesh position={[3, 1, 0]}>
-            <boxGeometry args={[0.1, 4, 4]} />
-            <meshStandardMaterial color="#f3f3f3" />
-          </mesh>
-        </group>
-
-        {/* MANNEQUIN - Rotates on drag only */}
-        <group
-          ref={mannequinRef}
-          position={[0, 0.5, 0]}
-          scale={[1.5, 1.5, 1.5]}
-          rotation={[0, rotationY, 0]}
-        >
-          <ImportedMannequin />
-        </group>
-      </Suspense>
-    </group>
-  );
-}
-
-
-/**
- * MannequinCanvas
- * - Canvas wrapper with optimized camera placement.
- */
-function MannequinCanvas() {
-  return (
-    <Canvas camera={{ position: [0, 1.5, 7], fov: 40 }}>
-      <InnerScene />
-    </Canvas>
-  );
-}
-
-
-
-
+import MannequinCanvas from "../components/MannequinCanvas";
 
 export default function SydematicsRoom() {
   const navigate = useNavigate();
-
   const [activeOutfit, setActiveOutfit] = useState(null);
   const [activeAccessory, setActiveAccessory] = useState(null);
   const [downloadBusy, setDownloadBusy] = useState(false);
 
   const clothesData = useMemo(
     () => [
-      {
-        id: "neon",
-        name: "Neon Streetwear",
-        desc: "Cyber casual (transparent PNG)",
-        src: "/outfits/neon-streetwear.png",
-      },
-      {
-        id: "cozy",
-        name: "Cozy Chic",
-        desc: "Neutral comfy vibe",
-        src: "/outfits/cozy-chic.png",
-      },
-      {
-        id: "holo",
-        name: "Holographic Fit",
-        desc: "Reflective future look",
-        src: "/outfits/holographic-fit.png",
-      },
-      {
-        id: "mono",
-        name: "Minimal Monochrome",
-        desc: "Sleek all-black silhouette",
-        src: "/outfits/minimal-monochrome.png",
-      },
+      { id: "neon", name: "Neon Streetwear", desc: "Cyber casual (transparent PNG)", src: "/outfits/neon-streetwear.png" },
+      { id: "cozy", name: "Cozy Chic", desc: "Neutral comfy vibe", src: "/outfits/cozy-chic.png" },
+      { id: "holo", name: "Holographic Fit", desc: "Reflective future look", src: "/outfits/holographic-fit.png" },
+      { id: "mono", name: "Minimal Monochrome", desc: "Sleek all-black silhouette", src: "/outfits/minimal-monochrome.png" },
     ],
     []
   );
@@ -239,7 +39,6 @@ export default function SydematicsRoom() {
       tmp.width = canvas.width;
       tmp.height = canvas.height;
       const ctx = tmp.getContext("2d");
-
       ctx.drawImage(canvas, 0, 0);
 
       const drawImg = async (src) => {
@@ -268,6 +67,7 @@ export default function SydematicsRoom() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-primary/10 text-foreground flex flex-col items-center pt-24 relative overflow-hidden">
+      {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-md border-b border-primary/20 py-4 px-8 flex justify-between items-center">
         <button
           onClick={() => navigate("/universe")}
@@ -280,24 +80,22 @@ export default function SydematicsRoom() {
         </h1>
       </header>
 
+      {/* Title */}
       <div className="text-center mt-24 space-y-4">
         <h2 className="text-4xl md:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent">
           Fashion, Aesthetics & Expression
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          Click an outfit to try it on the starry mannequin. Layers stack and you
-          can download your look.
+          Click an outfit to try it on the starry mannequin. Layers stack and you can download your look.
         </p>
       </div>
 
-<div
-  id="mannequin-stage"
-  className="relative mt-8 w-full h-screen bg-card/10 border border-primary/20 rounded-2xl overflow-hidden"
->
-  <div className="absolute inset-0">
-    <MannequinCanvas />
-  </div>
-
+      {/* Mannequin Stage */}
+      <div
+        id="mannequin-stage"
+        className="relative mt-8 w-full h-[600px] md:h-[700px] bg-card/10 border border-primary/20 rounded-2xl overflow-hidden"
+      >
+        <MannequinCanvas />
 
         {activeOutfit && (
           <img
@@ -315,9 +113,9 @@ export default function SydematicsRoom() {
         )}
       </div>
 
+      {/* Wardrobe */}
       <div className="mt-10 w-full max-w-6xl px-6">
         <h3 className="text-2xl font-semibold mb-4">Wardrobe — Click to Try On</h3>
-
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
           {clothesData.map((c) => (
             <div
@@ -340,17 +138,15 @@ export default function SydematicsRoom() {
             >
               Add Accessory
             </button>
-
             <button
               className="px-4 py-2 rounded-md border border-primary/30 bg-background/30"
-              onClick={() => clearOutfits()}
+              onClick={clearOutfits}
             >
               Clear Outfit
             </button>
-
             <button
               className="px-4 py-2 rounded-md border border-primary/30 bg-background/30"
-              onClick={() => downloadScreenshot()}
+              onClick={downloadScreenshot}
               disabled={downloadBusy}
             >
               {downloadBusy ? "Preparing..." : "Download Look"}
